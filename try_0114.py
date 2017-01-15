@@ -46,7 +46,7 @@ model1 = rfr.fit(train, o.train['y'])
 #model_xgb = runXGB(train,o.train['y'])
 
 #https://www.kaggle.com/bguberfain/two-sigma-financial-modeling/univariate-model-with-clip/run/482189
-low_y_cut = -0.06
+low_y_cut = -0.06 
 high_y_cut = 0.06
 y_is_above_cut = (o.train.y > high_y_cut)
 y_is_below_cut = (o.train.y < low_y_cut)
@@ -54,7 +54,7 @@ y_is_within_cut = (~y_is_above_cut & ~y_is_below_cut)
 model2 = LinearRegression()
 X_T20 = np.array(o.train[col].fillna(d_mean).loc[y_is_within_cut, 'technical_20'].values).reshape(-1,1)
 #X_T30 = np.array(o.train[col].fillna(d_mean).loc[y_is_within_cut, 'technical_30'].values).reshape(-1,1)
-X = np.concatenate((X_T20,X_T20**2),axis = 1)
+X = np.concatenate((X_T20,X_T20**2),axis = 1) #采取多项式特征
 model2.fit(X, o.train.loc[y_is_within_cut, 'y'])
 train = []
 
